@@ -1,7 +1,7 @@
 
-// import 'package:flutter/material.dart';
 
-import 'package:flutterquiz/model/quiz.dart';
+
+import 'quiz.dart';
 
 class Answer {
   
