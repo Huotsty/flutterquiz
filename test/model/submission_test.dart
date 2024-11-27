@@ -29,8 +29,8 @@ void main() {
     );
 
     test('Answer.isCorrect() should correctly evaluate answers', () {
-      final correctAnswer = Answer(question: question1, questionAnswer: "Paris");
-      final incorrectAnswer = Answer(question: question1, questionAnswer: "London");
+      final correctAnswer = Answer(question: question1, selectedAnswer: "Paris");
+      final incorrectAnswer = Answer(question: question1, selectedAnswer: "London");
 
       expect(correctAnswer.isCorrect, isTrue);
       expect(incorrectAnswer.isCorrect, isFalse);
@@ -40,10 +40,10 @@ void main() {
       final submission = Submission();
 
       submission.addAnswer(question1, "Paris");
-      expect(submission.getAnswerFor(question1)?.questionAnswer, "Paris");
+      expect(submission.getAnswerFor(question1)?.selectedAnswer, "Paris");
 
       submission.addAnswer(question1, "London"); // Update the answer
-      expect(submission.getAnswerFor(question1)?.questionAnswer, "London");
+      expect(submission.getAnswerFor(question1)?.selectedAnswer, "London");
     });
 
     test('Submission.getScore() should calculate the correct score', () {
@@ -78,8 +78,8 @@ void main() {
       final answer1 = submission.getAnswerFor(question1);
       final answer2 = submission.getAnswerFor(question2);
 
-      expect(answer1?.questionAnswer, "Paris");
-      expect(answer2?.questionAnswer, "4");
+      expect(answer1?.selectedAnswer, "Paris");
+      expect(answer2?.selectedAnswer, "4");
     });
   });
 }

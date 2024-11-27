@@ -38,7 +38,7 @@ class ResultScreen extends StatelessWidget {
               itemCount: quiz.questions.length,
               itemBuilder: (context, index) {
                 final question = quiz.questions[index];
-                final userAnswer = submission.getAnswerFor(question)?.questionAnswer ?? '';
+                final userAnswer = submission.getAnswerFor(question)?.selectedAnswer ?? '';
                 final isCorrect = submission.getAnswerFor(question)?.isCorrect ?? false;
 
                 return ResultItem(

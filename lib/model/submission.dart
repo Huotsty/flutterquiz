@@ -2,11 +2,11 @@
 import 'quiz.dart';
 class Answer {
   final Question question;
-  final String questionAnswer;
+  final String selectedAnswer;
 
-  Answer({required this.question, required this.questionAnswer});
+  Answer({required this.question, required this.selectedAnswer});
   
-  bool get isCorrect => question.goodAnswer == questionAnswer;
+  bool get isCorrect => question.goodAnswer == selectedAnswer;
 
 }
 class Submission{
@@ -19,7 +19,7 @@ class Submission{
     return _answers[question];
   }
   void addAnswer(Question question, String answer){
-    _answers[question] = Answer(question: question, questionAnswer: answer);
+    _answers[question] = Answer(question: question, selectedAnswer: answer);
   }
   void removeAnswers(){
     _answers.clear();
