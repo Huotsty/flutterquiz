@@ -24,7 +24,6 @@ class _QuestionScreenState extends State<QuestionScreen> {
   void handleAnswer(String selectedAnswer) {
     
     final currentQuestion = widget.quiz.questions[currentQuestionIndex];
-
     
     widget.submission.addAnswer(currentQuestion, selectedAnswer);
 

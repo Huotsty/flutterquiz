@@ -118,7 +118,7 @@ class ResultItem extends StatelessWidget {
             ),
             const SizedBox(height: 8),
 
-            // User's answer and feedback
+           
             Text(
               "Your answer: $userAnswer",
               style: TextStyle(
@@ -127,7 +127,7 @@ class ResultItem extends StatelessWidget {
               ),
             ),
 
-            // Display the correct answer if incorrect
+            
             if (!isCorrect)
               Text(
                 "Correct answer: ${question.goodAnswer}",

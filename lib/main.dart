@@ -5,7 +5,7 @@ import 'quiz_app.dart';
 
 void main() {
   final quiz = Quiz(
-    title: "Sample Quiz",
+    title: "Test quiz",
     questions: [
       const Question(
         title: "What is Flutter?",
@@ -16,6 +16,11 @@ void main() {
         title: "Who developed Dart?",
         possibleAnswers: ["Google", "Facebook", "Apple", "Microsoft"],
         goodAnswer: "Google",
+      ),
+      const Question(
+        title: "What is the main purpose of Flutter?",
+        possibleAnswers: ["To build cross-platform apps", "To build web apps", "To build mobile apps", "To build desktop apps"],
+        goodAnswer: "To build cross-platform apps",
       ),
     ],
   );

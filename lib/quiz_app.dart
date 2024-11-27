@@ -72,7 +72,7 @@ class _QuizAppState extends State<QuizApp> {
         break;
     }
 
-    // Dynamic Screen Rendering
+    
     Widget screen;
     switch (quizState) {
       case QuizState.notStarted:
