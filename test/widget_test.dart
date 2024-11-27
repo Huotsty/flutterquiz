@@ -1,30 +1,94 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:flutterquiz/model/quiz.dart';
+import 'package:flutterquiz/quiz_app.dart';
 
 
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+  group('QuizApp Tests', () {
+    // Mock quiz data
+    final mockQuiz = Quiz(
+      title: 'Sample Quiz',
+      questions: [
+        const Question(
+          title: 'What is the capital of France?',
+          possibleAnswers: ['Paris', 'Madrid', 'Berlin', 'Rome'],
+          goodAnswer: 'Paris',
+        ),
+        const Question(
+          title: 'What is 2 + 2?',
+          possibleAnswers: ['3', '4', '5', '6'],
+          goodAnswer: '4',
+        ),
+      ],
+    );
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+    testWidgets('displays WelcomeScreen initially', (WidgetTester tester) async {
+      await tester.pumpWidget(MaterialApp(home: QuizApp(quiz: mockQuiz)));
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
+      // Verify that the WelcomeScreen is displayed
+      expect(find.text('Welcome to the Quiz!'), findsOneWidget);
+      expect(find.text('Start Quiz'), findsOneWidget);
+    });
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    testWidgets('navigates to QuestionScreen on Start Quiz', (WidgetTester tester) async {
+      await tester.pumpWidget(MaterialApp(home: QuizApp(quiz: mockQuiz)));
+
+      // Tap the Start Quiz button
+      await tester.tap(find.text('Start Quiz'));
+      await tester.pumpAndSettle();
+
+      // Verify that the QuestionScreen is displayed
+      expect(find.text('What is the capital of France?'), findsOneWidget);
+      expect(find.text('Paris'), findsOneWidget);
+      expect(find.text('Madrid'), findsOneWidget);
+    });
+
+    testWidgets('selects answers and navigates to ResultScreen', (WidgetTester tester) async {
+      await tester.pumpWidget(MaterialApp(home: QuizApp(quiz: mockQuiz)));
+
+      // Start the quiz
+      await tester.tap(find.text('Start Quiz'));
+      await tester.pumpAndSettle();
+
+      // Question 1: Select the correct answer
+      await tester.tap(find.text('Paris'));
+      await tester.pumpAndSettle();
+
+      // Question 2: Select the correct answer
+      await tester.tap(find.text('4'));
+      await tester.pumpAndSettle();
+
+      // Verify that the ResultScreen is displayed
+      expect(find.text('You answered 2 on 2 !'), findsOneWidget);
+      expect(find.text('Restart Quiz'), findsOneWidget);
+    });
+
+    testWidgets('restarts the quiz when Restart Quiz is clicked', (WidgetTester tester) async {
+      await tester.pumpWidget(MaterialApp(home: QuizApp(quiz: mockQuiz)));
+
+      // Start the quiz
+      await tester.tap(find.text('Start Quiz'));
+      await tester.pumpAndSettle();
+
+      // Question 1: Select the correct answer
+      await tester.tap(find.text('Paris'));
+      await tester.pumpAndSettle();
+
+      // Question 2: Select the correct answer
+      await tester.tap(find.text('4'));
+      await tester.pumpAndSettle();
+
+      // Verify ResultScreen
+      expect(find.text('You answered 2 on 2 !'), findsOneWidget);
+
+      // Restart the quiz
+      await tester.tap(find.text('Restart Quiz'));
+      await tester.pumpAndSettle();
+
+      // Verify WelcomeScreen is displayed again
+      expect(find.text('Welcome to the Quiz!'), findsOneWidget);
+    });
   });
 }
